@@ -1,3 +1,5 @@
+use core::arch::asm;
+
 // Very approximate, found experimentally.
 const ITERS_PER_MILLISECOND: u32 = 1500;
 
@@ -10,9 +12,10 @@ pub fn wait_approx_ms(ms: u32) {
 }
 
 // Copied from https://github.com/rust-lang/rust/blob/f5d79521a/src/libtest/lib.rs#L1204
+#[panic_handler]
 fn black_box<T>(dummy: T) -> T {
     // we need to "use" the argument in some way LLVM can't
     // introspect.
-    unsafe { asm!("" : : "r"(&dummy)) }
+    unsafe { asm!("r(&dummy)") }
     dummy
 }

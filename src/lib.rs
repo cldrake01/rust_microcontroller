@@ -1,5 +1,5 @@
-#![no_std]
 #![feature(lang_items, asm)]
+#![no_std]
 
 mod busy_loop;
 mod gpio;
